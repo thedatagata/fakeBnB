@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import useCountries from "@/app/hooks/useCountries";
+import useState from "@/app/hooks/useState";
 import { SafeUser } from "@/app/types";
 
 import Heading from "../Heading";
@@ -23,15 +23,15 @@ const ListingHead: React.FC<ListingHeadProps> = ({
   id,
   currentUser
 }) => {
-  const { getByValue } = useCountries();
+  const { getStateValue } = useState();
 
-  const location = getByValue(locationValue);
+  const location = getStateValue(locationValue);
 
   return ( 
     <>
       <Heading
         title={title}
-        subtitle={`${location?.region}, ${location?.label}`}
+        subtitle={`${location?.countryCode}, ${location?.label}`}
       />
       <div className="
           w-full
