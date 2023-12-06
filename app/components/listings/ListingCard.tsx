@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from 'date-fns';
 
-import useState from "@/app/hooks/useState";
+
 import { 
   SafeListing, 
   SafeReservation, 
@@ -15,6 +15,7 @@ import {
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 import ClientOnly from "../ClientOnly";
+import useStateLookup from "@/app/hooks/useStateLookup";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -36,9 +37,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
   currentUser,
 }) => {
   const router = useRouter();
-  const { getStateValue } = useState();
+  const { getStateValue } = useStateLookup();
 
-  const location = getStateValue(data.stateValue);
+  const location = getStateValue(data.stateName);
 
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,7 +110,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           </div>
         </div>
         <div className="font-semibold text-lg">
-          {location?.countryCode}, {location?.label}
+          {location?.stateName}, {location?.countryCode}
         </div>
         <div className="font-light text-neutral-500">
           {reservationDate || data.category}

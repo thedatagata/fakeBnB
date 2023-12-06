@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
 
-import useState from "@/app/hooks/useState";
 import { SafeUser } from "@/app/types";
 
 import Avatar from "../Avatar";
@@ -34,7 +33,6 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
   bathroomCount,
   category,
 }) => {
-  const { getStateValue } = useState();
 
   return ( 
     <div className="col-span-4 flex flex-col gap-8">

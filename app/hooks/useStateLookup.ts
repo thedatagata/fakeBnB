@@ -3,15 +3,15 @@ import { State } from "country-state-city";
 const states = State.getStatesOfCountry("US");
 
 const formattedStates = states.map((state) => ({
-  label: state.name,
+  stateName: state.name,
   countryCode: state.countryCode
 }));
 
-const useState = () => {
+const useStateLookup = () => {
   const getAllStates = () => formattedStates;
 
   const getStateValue = (value: string) => {
-    return formattedStates.find((state) => state.label === value);
+    return formattedStates.find((state) => state.stateName === value);
   }
 
   return {
@@ -20,4 +20,4 @@ const useState = () => {
   }
 };
 
-export default useState;
+export default useStateLookup;

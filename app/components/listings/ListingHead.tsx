@@ -2,14 +2,17 @@
 
 import Image from "next/image";
 
-import useState from "@/app/hooks/useState";
+
 import { SafeUser } from "@/app/types";
 
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
+import { useState } from "react";
+import useStateLookup from "@/app/hooks/useStateLookup";
 
 interface ListingHeadProps {
   title: string;
+  stateName: string;
   imageSrc: string;
   id: string;
   currentUser?: SafeUser | null
@@ -17,16 +20,20 @@ interface ListingHeadProps {
 
 const ListingHead: React.FC<ListingHeadProps> = ({
   title,
+  stateName,
   imageSrc,
   id,
   currentUser
 }) => {
-  const { getStateValue } = useState();
+  const { getStateValue } = useStateLookup();
+
+  const location = getStateValue(stateName);
 
   return ( 
     <>
       <Heading
         title={title}
+        subtitle={`${location?.stateName}, ${location?.countryCode}`}
       />
       <div className="
           w-full

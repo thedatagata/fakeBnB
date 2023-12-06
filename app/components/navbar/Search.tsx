@@ -6,7 +6,7 @@ import { BiSearch } from 'react-icons/bi';
 import { differenceInDays } from 'date-fns';
 
 import useSearchModal from '@/app/hooks/useSearchModal';
-import useState from '@/app/hooks/useState';
+import useState from '@/app/hooks/useStateLookup';
 
 const Search = () => {
   const searchModal = useSearchModal();
@@ -19,7 +19,7 @@ const Search = () => {
 
   const stateLabel = useMemo(() => {
     if (stateValue) {
-      return getStateValue(stateValue as string)?.label;
+      return getStateValue(stateValue as string)?.stateName;
     }
 
     return 'Anywhere';

@@ -1,11 +1,10 @@
 'use client';
-
+import useStateLookup from '@/app/hooks/useStateLookup';
 import Select from 'react-select'
 
-import useState from '@/app/hooks/useState';
 
 export type StateSelectValue = {
-  label: string;
+  stateName: string;
   countryCode: string;
 }
 
@@ -18,7 +17,7 @@ const StateSelect: React.FC<StateSelectProps> = ({
   value,
   onChange
 }) => {
-  const { getAllStates } = useState();
+  const { getAllStates } = useStateLookup();
 
   return ( 
     <div>
@@ -33,9 +32,9 @@ const StateSelect: React.FC<StateSelectProps> = ({
           flex flex-row items-center gap-3">
             <div>{option.flag}</div>
             <div>
-              {option.label},
+              {option.stateName},
               <span className="text-neutral-500 ml-1">
-                {option.region}
+                {option.countryCode}
               </span>
             </div>
           </div>
