@@ -15,7 +15,7 @@ import {
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 import ClientOnly from "../ClientOnly";
-import useStateLookup from "@/app/hooks/useStateLookup";
+import useStateLookup from "@/app/hooks/useCountries";
 
 interface ListingCardProps {
   data: SafeListing;

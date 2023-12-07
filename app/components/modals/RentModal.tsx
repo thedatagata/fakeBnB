@@ -7,6 +7,7 @@ import {
   SubmitHandler, 
   useForm
 } from 'react-hook-form';
+import { AddressAutofill } from '@mapbox/search-js-react';
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from "react";
@@ -16,7 +17,6 @@ import useRentModal from '@/app/hooks/useRentModal';
 import Modal from "./Modal";
 import Counter from "../inputs/Counter";
 import CategoryInput from '../inputs/CategoryInput';
-import CountrySelect from "../inputs/StateSelect";
 import { categories } from '../navbar/Categories';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
@@ -50,7 +50,7 @@ const RentModal = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       category: '',
-      location: null,
+      address: null,
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
@@ -61,16 +61,11 @@ const RentModal = () => {
     }
   });
 
-  const location = watch('location');
   const category = watch('category');
   const guestCount = watch('guestCount');
   const roomCount = watch('roomCount');
   const bathroomCount = watch('bathroomCount');
   const imageSrc = watch('imageSrc');
-
-  const Map = useMemo(() => dynamic(() => import('../Map'), { 
-    ssr: false 
-  }), [location]);
 
 
   const setCustomValue = (id: string, value: any) => {
@@ -93,9 +88,8 @@ const RentModal = () => {
     if (step !== STEPS.PRICE) {
       return onNext();
     }
-    
     setIsLoading(true);
-
+    console.log(data);
     axios.post('/api/listings', data)
     .then(() => {
       toast.success('Listing created!');
@@ -166,11 +160,18 @@ const RentModal = () => {
           title="Where is your place located?"
           subtitle="Help guests find you!"
         />
-        <CountrySelect 
-          value={location} 
-          onChange={(value) => setCustomValue('location', value)} 
+        <AddressAutofill accessToken={process.env.mapbox_key}>
+        <Input
+          id="address"
+          label="Address"
+          placeholder="Enter the Property Address"
+          autocomplete="address-line1"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
         />
-        <Map center={location?.latlng} />
+        </AddressAutofill>
       </div>
     );
   }

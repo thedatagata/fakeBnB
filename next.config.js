@@ -11,6 +11,9 @@ const nextConfig = {
       'images.unsplash.com',
       'unsplash.com',
     ]
+  }, 
+  env: {
+    mapbox_key: 'pk.eyJ1IjoiZGFzZ2F0YSIsImEiOiJjbHBzdjc4bGcwNjlsMmltbzNpZW5wcDhqIn0.LdzmmormD0IJygyu84VvjA'
   }
 }
 

@@ -1,40 +1,44 @@
 'use client';
-import useStateLookup from '@/app/hooks/useStateLookup';
+
 import Select from 'react-select'
 
+import useCountries from '@/app/hooks/useCountries';
 
-export type StateSelectValue = {
-  stateName: string;
-  countryCode: string;
+export type CountrySelectValue = {
+  flag: string;
+  label: string;
+  latlng: number[],
+  region: string;
+  value: string
 }
 
-interface StateSelectProps {
-  value?: StateSelectValue;
-  onChange: (value: StateSelectValue) => void;
+interface CountrySelectProps {
+  value?: CountrySelectValue;
+  onChange: (value: CountrySelectValue) => void;
 }
 
-const StateSelect: React.FC<StateSelectProps> = ({
+const CountrySelect: React.FC<CountrySelectProps> = ({
   value,
   onChange
 }) => {
-  const { getAllStates } = useStateLookup();
+  const { getAll } = useCountries();
 
   return ( 
     <div>
       <Select
         placeholder="Anywhere"
         isClearable
-        options={getAllStates()}
+        options={getAll()}
         value={value}
-        onChange={(value) => onChange(value as StateSelectValue)}
+        onChange={(value) => onChange(value as CountrySelectValue)}
         formatOptionLabel={(option: any) => (
           <div className="
           flex flex-row items-center gap-3">
             <div>{option.flag}</div>
             <div>
-              {option.stateName},
+              {option.label},
               <span className="text-neutral-500 ml-1">
-                {option.countryCode}
+                {option.region}
               </span>
             </div>
           </div>
@@ -58,4 +62,4 @@ const StateSelect: React.FC<StateSelectProps> = ({
    );
 }
  
-export default StateSelect;
+export default CountrySelect;

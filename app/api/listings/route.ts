@@ -21,7 +21,7 @@ export async function POST(
     roomCount,
     bathroomCount,
     guestCount,
-    location,
+    address,
     price,
    } = body;
 
@@ -40,7 +40,7 @@ export async function POST(
       roomCount,
       bathroomCount,
       guestCount,
-      stateName: location.stateName,
+      address,
       price: parseInt(price, 10),
       userId: currentUser.id
     }

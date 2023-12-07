@@ -8,7 +8,7 @@ import { SafeUser } from "@/app/types";
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
 import { useState } from "react";
-import useStateLookup from "@/app/hooks/useStateLookup";
+import useStateLookup from "@/app/hooks/useCountries";
 
 interface ListingHeadProps {
   title: string;
