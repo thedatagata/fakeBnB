@@ -8,7 +8,6 @@ import { SafeUser } from "@/app/types";
 import Heading from "../Heading";
 import HeartButton from "../HeartButton";
 import { useState } from "react";
-import useStateLookup from "@/app/hooks/useCountries";
 
 interface ListingHeadProps {
   title: string;
@@ -20,20 +19,15 @@ interface ListingHeadProps {
 
 const ListingHead: React.FC<ListingHeadProps> = ({
   title,
-  stateName,
   imageSrc,
   id,
   currentUser
 }) => {
-  const { getStateValue } = useStateLookup();
-
-  const location = getStateValue(stateName);
 
   return ( 
     <>
       <Heading
         title={title}
-        subtitle={`${location?.stateName}, ${location?.countryCode}`}
       />
       <div className="
           w-full

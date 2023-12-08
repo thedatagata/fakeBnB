@@ -7,14 +7,14 @@ import {
   SubmitHandler, 
   useForm
 } from 'react-hook-form';
-import { AddressAutofill } from '@mapbox/search-js-react';
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback} from "react";
 
 import useRentModal from '@/app/hooks/useRentModal';
 
 import Modal from "./Modal";
+import AddressSearch from '../inputs/AddressSearch';
 import Counter from "../inputs/Counter";
 import CategoryInput from '../inputs/CategoryInput';
 import { categories } from '../navbar/Categories';
@@ -61,12 +61,12 @@ const RentModal = () => {
     }
   });
 
+  const address = watch('address');
   const category = watch('category');
   const guestCount = watch('guestCount');
   const roomCount = watch('roomCount');
   const bathroomCount = watch('bathroomCount');
   const imageSrc = watch('imageSrc');
-
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -160,18 +160,12 @@ const RentModal = () => {
           title="Where is your place located?"
           subtitle="Help guests find you!"
         />
-        <AddressAutofill accessToken={process.env.mapbox_key}>
-        <Input
-          id="address"
-          label="Address"
-          placeholder="Enter the Property Address"
-          autocomplete="address-line1"
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
+        <AddressSearch
+          accessToken="pk.eyJ1IjoiZGFzZ2F0YSIsImEiOiJjbHBzdjc4bGcwNjlsMmltbzNpZW5wcDhqIn0.LdzmmormD0IJygyu84VvjA"
+          placeholder="Search for your property's address"
+          onRetrieve={(value) => setCustomValue('address', value.features[0].properties.full_address)}
+          value={address}
         />
-        </AddressAutofill>
       </div>
     );
   }
@@ -260,7 +254,6 @@ const RentModal = () => {
         <Input
           id="price"
           label="Price"
-          formatPrice 
           type="number" 
           disabled={isLoading}
           register={register}

@@ -15,7 +15,6 @@ import {
 import HeartButton from "../HeartButton";
 import Button from "../Button";
 import ClientOnly from "../ClientOnly";
-import useStateLookup from "@/app/hooks/useCountries";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -37,9 +36,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
   currentUser,
 }) => {
   const router = useRouter();
-  const { getStateValue } = useStateLookup();
-
-  const location = getStateValue(data.stateName);
 
   const handleCancel = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -108,9 +104,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
               currentUser={currentUser}
             />
           </div>
-        </div>
-        <div className="font-semibold text-lg">
-          {location?.stateName}, {location?.countryCode}
         </div>
         <div className="font-light text-neutral-500">
           {reservationDate || data.category}
