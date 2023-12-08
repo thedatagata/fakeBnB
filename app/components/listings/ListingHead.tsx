@@ -11,7 +11,7 @@ import { useState } from "react";
 
 interface ListingHeadProps {
   title: string;
-  stateName: string;
+  address: string;
   imageSrc: string;
   id: string;
   currentUser?: SafeUser | null
@@ -19,6 +19,7 @@ interface ListingHeadProps {
 
 const ListingHead: React.FC<ListingHeadProps> = ({
   title,
+  address,
   imageSrc,
   id,
   currentUser
@@ -28,6 +29,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
     <>
       <Heading
         title={title}
+        subtitle={address}
       />
       <div className="
           w-full
