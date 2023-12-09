@@ -50,7 +50,15 @@ const RentModal = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       category: '',
-      address: null,
+      address: '',
+      full_address: '',
+      country_code: '',
+      region_name: '',
+      postcode_name: 1,
+      place_name: '',
+      locality_name: '',
+      latitude: 1,
+      longitude: 1,
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
@@ -74,6 +82,28 @@ const RentModal = () => {
       shouldTouch: true,
       shouldValidate: true
     })
+  }
+
+  const setAddressData = (data: object) => {
+    const properties = data.features[0].properties;
+
+    const keyValuePairs = {
+      'address': properties.address,
+      'full_address': properties.full_address,
+      'country_code': properties.context.country.country_code,
+      'region_name': properties.context.region.name,
+      'postcode': properties.context.postcode.name,
+      'place_name': properties.context.place.name,
+      'neighborhood': properties.context.neighborhood.name,
+      'latitude': properties.coordinates.latitude,
+      'longitude': properties.coordinates.longitude
+    };
+    Object.entries(keyValuePairs).forEach(([id, value]) => {
+      if (value !== null) {
+        console.log(id, value);
+        setCustomValue(id, value);
+      }
+    });
   }
 
   const onBack = () => {
@@ -163,7 +193,7 @@ const RentModal = () => {
         <AddressSearch
           accessToken="pk.eyJ1IjoiZGFzZ2F0YSIsImEiOiJjbHBzdjc4bGcwNjlsMmltbzNpZW5wcDhqIn0.LdzmmormD0IJygyu84VvjA"
           placeholder="Search for your property's address"
-          onRetrieve={(value) => setCustomValue('address', value.features[0].properties.full_address)}
+          onRetrieve={(res) => setAddressData(res)}
           value={address}
         />
       </div>

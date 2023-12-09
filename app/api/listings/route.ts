@@ -22,6 +22,14 @@ export async function POST(
     bathroomCount,
     guestCount,
     address,
+    full_address,
+    country_code,
+    region_name, 
+    postcode, 
+    place_name, 
+    neighborhood, 
+    latitude,
+    longitude,
     price,
    } = body;
 
@@ -41,6 +49,14 @@ export async function POST(
       bathroomCount,
       guestCount,
       address,
+      full_address, 
+      country_code,
+      region_name, 
+      postcode,
+      place_name,
+      neighborhood,
+      latitude,
+      longitude,
       price: parseInt(price, 10),
       userId: currentUser.id
     }
