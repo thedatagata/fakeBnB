@@ -34,6 +34,7 @@ export default async function RootLayout({
         <ClientOnly>
           <ToasterProvider />
           <LoginModal />
+          <SearchModal />
           <RegisterModal />
           <RentModal />
           <Navbar currentUser={currentUser} />

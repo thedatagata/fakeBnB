@@ -3,44 +3,25 @@
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { BiSearch } from 'react-icons/bi';
-import { differenceInDays } from 'date-fns';
 
 import useSearchModal from '@/app/hooks/useSearchModal';
+import useStateCitiesLookup from '@/app/hooks/useStateCitiesLookup';
 
 const Search = () => {
   const searchModal = useSearchModal();
   const params = useSearchParams();
+  const { selectUSState } = useStateCitiesLookup();
 
-  const  locationValue = params?.get('locationValue'); 
-  const  startDate = params?.get('startDate');
-  const  endDate = params?.get('endDate');
-  const  guestCount = params?.get('guestCount');
+  const  USStateValue = params?.get('USStateValue');
 
-  const durationLabel = useMemo(() => {
-    if (startDate && endDate) {
-      const start = new Date(startDate as string);
-      const end = new Date(endDate as string);
-      let diff = differenceInDays(end, start);
-
-      if (diff === 0) {
-        diff = 1;
-      }
-
-      return `${diff} Days`;
+  const USStateLabel = useMemo(() =>{
+    if(USStateValue){
+      return selectUSState(USStateValue as string)?.stateName;
     }
+    return 'Any State'
+  }, [USStateValue, selectUSState]);
 
-    return 'Any Week'
-  }, [startDate, endDate]);
-
-  const guestLabel = useMemo(() => {
-    if (guestCount) {
-      return `${guestCount} Guests`;
-    }
-
-    return 'Add Guests';
-  }, [guestCount]);
-
-  return ( 
+  return (  
     <div
       onClick={searchModal.onOpen}
       className="
@@ -63,14 +44,14 @@ const Search = () => {
           justify-between
         "
       >
-        <div 
+        <div
           className="
             text-sm 
             font-semibold 
             px-6
           "
         >
-          Anywhere
+          {USStateLabel}
         </div>
         <div 
           className="
@@ -84,7 +65,7 @@ const Search = () => {
             text-center
           "
         >
-          {durationLabel}
+          1 week
         </div>
         <div 
           className="
@@ -98,7 +79,7 @@ const Search = () => {
             gap-3
           "
         >
-          <div className="hidden sm:block">{guestLabel}</div>
+          <div className="hidden sm:block">1</div>
           <div 
             className="
               p-2 

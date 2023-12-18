@@ -60,8 +60,9 @@ model Listing {
   country_code String
   region_name String
   postcode String
-  place_name String
-  neighborhood String
+  district_name String?
+  place_name String?
+  neighborhood String?
   latitude Float
   longitude Float
   userId String @db.ObjectId

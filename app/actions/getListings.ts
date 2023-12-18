@@ -7,7 +7,13 @@ export interface IListingsParams {
   bathroomCount?: number;
   startDate?: string;
   endDate?: string;
-  locationValue?: string;
+  address?: string;
+  full_address?: string;
+  country_code?: string;
+  region_name?: string;
+  post_code?: string;
+  place_name?: string;
+  neighborhood?: string;
   category?: string;
 }
 
@@ -20,7 +26,13 @@ export default async function getListings(
       roomCount, 
       guestCount, 
       bathroomCount, 
-      locationValue,
+      address,
+      full_address,
+      country_code,
+      region_name,
+      post_code,
+      place_name,
+      neighborhood,
       startDate,
       endDate,
       category,
@@ -54,8 +66,8 @@ export default async function getListings(
       }
     }
 
-    if (locationValue) {
-      query.locationValue = locationValue;
+    if (region_name) {
+      query.region_name = region_name;
     }
 
     if (startDate && endDate) {

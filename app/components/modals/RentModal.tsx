@@ -86,15 +86,16 @@ const RentModal = () => {
 
   const setAddressData = (data: object) => {
     const properties = data.features[0].properties;
-
+    console.log(properties);
     const keyValuePairs = {
       'address': properties.address,
       'full_address': properties.full_address,
       'country_code': properties.context.country.country_code,
       'region_name': properties.context.region.name,
       'postcode': properties.context.postcode.name,
-      'place_name': properties.context.place.name,
-      'neighborhood': properties.context.neighborhood.name,
+      'district_name': properties.context?.district?.name || '',
+      'place_name': properties.context?.place?.name || '',
+      'neighborhood': properties.context?.neighborhood?.name || '',
       'latitude': properties.coordinates.latitude,
       'longitude': properties.coordinates.longitude
     };
