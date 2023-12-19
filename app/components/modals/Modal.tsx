@@ -17,7 +17,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ 
-  isOpen, 
+  isOpen,
   onClose, 
   onSubmit, 
   title, 

@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { BiSearch } from 'react-icons/bi';
+import { differenceInDays } from 'date-fns';
 
 import useSearchModal from '@/app/hooks/useSearchModal';
 import useStateCitiesLookup from '@/app/hooks/useStateCitiesLookup';
@@ -10,20 +11,45 @@ import useStateCitiesLookup from '@/app/hooks/useStateCitiesLookup';
 const Search = () => {
   const searchModal = useSearchModal();
   const params = useSearchParams();
-  const { selectUSState } = useStateCitiesLookup();
 
-  const  USStateValue = params?.get('USStateValue');
+  const  USStateValue = params?.get('region_name');
+  const  startDate = params?.get('startDate');
+  const  endDate = params?.get('endDate');
+  const  guestCount = params?.get('guestCount');
 
   const USStateLabel = useMemo(() =>{
     if(USStateValue){
-      return selectUSState(USStateValue as string)?.stateName;
+      return USStateValue;
     }
     return 'Any State'
-  }, [USStateValue, selectUSState]);
+  }, [USStateValue]);
+
+  const durationLabel = useMemo(() => {
+    if (startDate && endDate) {
+      const start = new Date(startDate as string);
+      const end = new Date(endDate as string);
+      let diff = differenceInDays(end, start);
+
+      if (diff === 0) {
+        diff = 1;
+      }
+
+      return `${diff} Days`;
+    }
+
+    return 'Any Week'
+  }, [startDate, endDate]);
+
+  const guestLabel = useMemo(() => {
+    if (guestCount) {
+      return `${guestCount} Guests`;
+    }
+
+    return 'Add Guests';
+  }, [guestCount]);
 
   return (  
     <div
-      onClick={searchModal.onOpen}
       className="
         border-[1px] 
         w-full 
@@ -36,7 +62,7 @@ const Search = () => {
         cursor-pointer
       "
     >
-      <div 
+      <div
         className="
           flex 
           flex-row 
@@ -45,7 +71,9 @@ const Search = () => {
         "
       >
         <div
+          onClick={(event)=> {event.stopPropagation(); searchModal.onOpen(0)}}
           className="
+            state-city-select
             text-sm 
             font-semibold 
             px-6
@@ -53,8 +81,10 @@ const Search = () => {
         >
           {USStateLabel}
         </div>
-        <div 
+        <div
+          onClick={(event)=> {event.stopPropagation(); searchModal.onOpen(1)}}
           className="
+            date-select
             hidden 
             sm:block 
             text-sm 
@@ -65,9 +95,9 @@ const Search = () => {
             text-center
           "
         >
-          1 week
+          {durationLabel}
         </div>
-        <div 
+        <div
           className="
             text-sm 
             pl-6 
@@ -79,7 +109,11 @@ const Search = () => {
             gap-3
           "
         >
-          <div className="hidden sm:block">1</div>
+          <div
+          onClick={(event)=> {event.stopPropagation(); searchModal.onOpen(2)}}
+            className="hidden sm:block info-select">
+              {guestLabel}
+            </div>
           <div 
             className="
               p-2 

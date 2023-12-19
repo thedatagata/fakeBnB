@@ -3,41 +3,36 @@
 import qs from 'query-string';
 import dynamic from 'next/dynamic'
 import { useCallback, useMemo, useState } from "react";
+import { Range } from 'react-date-range';
+import { formatISO, set } from 'date-fns';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import useSearchModal from '@/app/hooks/useSearchModal';
 
 import Modal from "./Modal";
+import Calender from "../inputs/Calendar";
+import Counter from "../inputs/Counter";
 import StateSelect, { USStateValue } from "../inputs/StateSelect";
 import CitySelect, { StateCityValue } from "../inputs/CitySelect";
 import Heading from '../Heading';
 
-enum STEPS {
-  USSTATE = 0
-}
-
-const SearchModal = () => {
+const SearchModal = () => { 
   const router = useRouter();
   const searchModal = useSearchModal();
   const params = useSearchParams();
-  const [step, setStep] = useState(STEPS.USSTATE);
   const [usState, setUSState] = useState<USStateValue>();
   const [stateCity, setStateCity] = useState<StateCityValue>();
-
-  const onBack = useCallback(() => {
-    setStep((value) => value - 1);
-  }, []);
-
-  const onNext = useCallback(() => {
-    setStep((value) => value + 1);
-  }, []);
+  const [guestCount, setGuestCount] = useState(1);
+  const [roomCount, setRoomCount] = useState(1);
+  const [bathroomCount, setBathroomCount] = useState(1);
+  const [dateRange, setDateRange] = useState<Range>({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection'
+  });
 
   const onSubmit = useCallback(async () => {
-    if (step !== STEPS.USSTATE) {
-      return onNext();
-    }
     let currentQuery = {};
-
     if (params) {
       currentQuery = qs.parse(params.toString())
     }
@@ -46,7 +41,18 @@ const SearchModal = () => {
       ...currentQuery,
       region_name: usState?.stateName,
       place_name: stateCity?.cityName,
+      guestCount,
+      roomCount,
+      bathroomCount
     };
+
+    if (dateRange.startDate) {
+      updatedQuery.startDate = formatISO(dateRange.startDate);
+    }
+
+    if (dateRange.endDate) {
+      updatedQuery.endDate = formatISO(dateRange.endDate);
+    }
 
     const url = qs.stringifyUrl({
       url: '/',
@@ -56,36 +62,89 @@ const SearchModal = () => {
     router.push(url);
   }, 
   [
-    step, 
-    onNext,
     searchModal,
     usState,
     stateCity,
     router,
-    params
+    params, 
+    guestCount,
+    roomCount,
+    bathroomCount,
+    dateRange
   ]);
 
-  let bodyContent = (
-    <div className="flex flex-col gap-8">
-      <Heading
-        title="Which US state are you visiting?"
-        subtitle="Find the perfect location!"
-      />
-      <StateSelect 
-        value={usState} 
-        onChange={(value) => 
-          setUSState(value as USStateValue)}
-      />
-      {!!usState !== false && (
-        <CitySelect
-          usState={usState}
-          value={stateCity} 
-          onChange={(value) => 
-            setStateCity(value as StateCityValue)}
+  let bodyContent;
+  switch (searchModal.stepNumber) {
+    case 0: 
+      bodyContent = (<div className="flex flex-col gap-8">
+        <Heading
+          title="Which US state are you visiting?"
+          subtitle="Find the perfect location!"
         />
-      )}
-    </div>
-  )
+        <StateSelect 
+          value={usState} 
+          onChange={(value) => 
+            setUSState(value as USStateValue)}
+        />
+        {!!usState !== false && (
+          <CitySelect
+            usState={usState}
+            value={stateCity} 
+            onChange={(value) => 
+              setStateCity(value as StateCityValue)}
+          />
+        )}
+      </div>
+    )
+      break;
+    case 1:
+      bodyContent = (
+        <div className="flex flex-col gap-8">
+          <Heading
+            title="When do you plan to go?"
+            subtitle="Make sure everyone is free!"
+          />
+          <Calender
+            onChange={(value) => setDateRange(value.selection)}
+            value={dateRange}
+          />
+        </div>
+      )
+      break;
+    case 2:
+      bodyContent = (
+        <div className="flex flex-col gap-8">
+          <Heading
+            title="More information"
+            subtitle="Find your perfect place!"
+          />
+          <Counter 
+            onChange={(value) => setGuestCount(value)}
+            value={guestCount}
+            title="Guests" 
+            subtitle="How many guests are coming?"
+          />
+          <hr />
+          <Counter 
+            onChange={(value) => setRoomCount(value)}
+            value={roomCount}
+            title="Rooms" 
+            subtitle="How many rooms do you need?"
+          />        
+          <hr />
+          <Counter 
+            onChange={(value) => {
+              setBathroomCount(value)
+            }}
+            value={bathroomCount}
+            title="Bathrooms"
+            subtitle="How many bahtrooms do you need?"
+          />
+        </div>
+      )
+      break;
+  }
+
 
   return (
     <Modal
