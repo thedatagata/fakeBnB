@@ -9,6 +9,7 @@ import useSearchModal from '@/app/hooks/useSearchModal';
 
 import Modal from "./Modal";
 import StateSelect, { USStateValue } from "../inputs/StateSelect";
+import CitySelect, { StateCityValue } from "../inputs/CitySelect";
 import Heading from '../Heading';
 
 enum STEPS {
@@ -21,6 +22,7 @@ const SearchModal = () => {
   const params = useSearchParams();
   const [step, setStep] = useState(STEPS.USSTATE);
   const [usState, setUSState] = useState<USStateValue>();
+  const [stateCity, setStateCity] = useState<StateCityValue>();
 
   const onBack = useCallback(() => {
     setStep((value) => value - 1);
@@ -43,6 +45,7 @@ const SearchModal = () => {
     const updatedQuery: any = {
       ...currentQuery,
       region_name: usState?.stateName,
+      place_name: stateCity?.cityName,
     };
 
     const url = qs.stringifyUrl({
@@ -57,6 +60,7 @@ const SearchModal = () => {
     onNext,
     searchModal,
     usState,
+    stateCity,
     router,
     params
   ]);
@@ -73,12 +77,12 @@ const SearchModal = () => {
           setUSState(value as USStateValue)}
       />
       {!!usState !== false && (
-      <CitySelect
-        usState={usState}
-        value={stateCity} 
-        onChange={(value) => 
-          setStateCity(value as StateCityValue)}
-      />
+        <CitySelect
+          usState={usState}
+          value={stateCity} 
+          onChange={(value) => 
+            setStateCity(value as StateCityValue)}
+        />
       )}
     </div>
   )

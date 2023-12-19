@@ -3,30 +3,30 @@
 import useStateCitiesLookup from '@/app/hooks/useStateCitiesLookup';
 import Select from 'react-select';
 
-export type USStateValue = {
-  stateName: string;
+export type StateCityValue = {
+  cityName: string;
 }
 
 interface CitySelectProps {
-    value?: StateCityValue; 
+    value?: StateCityValue;
+    usState?: string;
     onChange: (value: StateCityValue) => void;
 }
 
-const StateSelect: React.FC<StateSelectProps> = ({ value, usState, onChange }) => {
+const CitySelect: React.FC<CitySelectProps> = ({ value, usState, onChange }) => {
     const { getCities } = useStateCitiesLookup();
-
     return (
         <div>
           <Select 
-            placeholder="Select a state" 
+            placeholder="Select a City" 
             isClearable 
-            options={getCities(usState?.stateName)}
+            options={getCities(usState.stateCode)}
             value={value}
             onChange={(value) => onChange(value)}
             formatOptionLabel={(option: any) => (
                 <div className="
                 flex flex-row items-center gap-3">
-                  <div>{option.stateName}</div>
+                  <div>{option.name}</div>
                 </div>
               )}
               classNames={{
@@ -48,4 +48,4 @@ const StateSelect: React.FC<StateSelectProps> = ({ value, usState, onChange }) =
     )
 };
 
-export default StateSelect;
+export default CitySelect;

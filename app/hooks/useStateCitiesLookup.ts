@@ -1,7 +1,8 @@
 import { State, City } from 'country-state-city';
 
 const formattedStates = State.getStatesOfCountry('US').map((usState) => ({
-  stateName: usState.name
+  stateName: usState.name, 
+  stateCode: usState.isoCode
 }));
 
 const useStateCitiesLookup = () => {
@@ -11,12 +12,14 @@ const useStateCitiesLookup = () => {
     return formattedStates.find((item) => item.stateName === value);
   }
 
-  const getCities = (state: string) => {
-    return City.getCitiesOfState('US', state);
+  const getCities = (stateCode: string) => { 
+    const cities = City.getCitiesOfState('US', stateCode);
+    console.log(cities[0])
+    return cities
   }
 
-  const selectCity = (state: string, value: string) => {
-    return City.getCitiesOfState('US', state).find((item) => item.name === value);
+  const selectCity = (stateCode: string, value: string) => {
+    return City.getCitiesOfState('US', stateCode).find((item) => item.name === value);
   }
 
   return {

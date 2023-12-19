@@ -5,6 +5,7 @@ import Select from 'react-select';
 
 export type USStateValue = {
   stateName: string;
+  stateCode: string;
 }
 
 interface StateSelectProps {
