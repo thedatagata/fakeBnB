@@ -11,7 +11,6 @@ const useSearchModal = create<SearchModalStore>((set) => ({
   isOpen: false,
   stepNumber: 0,
   onOpen: (stepNumber) => {
-    console.log('Opening Modal at step: ', stepNumber)
     set({ isOpen: true, stepNumber })
   },
   onClose: () => set({ isOpen: false, stepNumber: 0})

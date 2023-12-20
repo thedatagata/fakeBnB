@@ -13,7 +13,7 @@ interface StateSelectProps {
     onChange: (value: USStateValue) => void;
 }
 
-const StateSelect: React.FC<StateSelectProps> = ({ value, onChange }) => {
+const USStateSelect: React.FC<StateSelectProps> = ({ value, onChange }) => {
     const { getUSStates } = useStateCitiesLookup();
 
     return (
@@ -49,4 +49,4 @@ const StateSelect: React.FC<StateSelectProps> = ({ value, onChange }) => {
     )
 };
 
-export default StateSelect;
+export default USStateSelect;

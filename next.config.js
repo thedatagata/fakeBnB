@@ -13,7 +13,8 @@ const nextConfig = {
     ]
   }, 
   env: {
-    mapbox_key: 'pk.eyJ1IjoiZGFzZ2F0YSIsImEiOiJjbHBzdjc4bGcwNjlsMmltbzNpZW5wcDhqIn0.LdzmmormD0IJygyu84VvjA'
+    mapbox_key: 'pk.eyJ1IjoidGhlZGF0YWdhdGEiLCJhIjoiY2xwc3V6bm9kMDFrbTJwcGg1cGU3MzQ0eCJ9.qZC6e9M7PdILZ1ES4MhMVA',
+    style_url: 'mapbox://styles/thedatagata/clqcwc3os009101qlf20e1n91'
   }
 }
 

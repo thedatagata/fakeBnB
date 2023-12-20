@@ -13,13 +13,16 @@ const useStateCitiesLookup = () => {
   }
 
   const getCities = (stateCode: string) => { 
-    const cities = City.getCitiesOfState('US', stateCode);
-    console.log(cities[0])
-    return cities
+    return City.getCitiesOfState('US', stateCode).map((usCity)=> ({
+      cityName: usCity.name
+    }))
   }
 
   const selectCity = (stateCode: string, value: string) => {
-    return City.getCitiesOfState('US', stateCode).find((item) => item.name === value);
+    const formattedCities = City.getCitiesOfState('US', stateCode).map((usCity)=> ({
+      cityName: usCity.name
+    }))
+    return formattedCities.find((item) => item.cityName === value);
   }
 
   return {

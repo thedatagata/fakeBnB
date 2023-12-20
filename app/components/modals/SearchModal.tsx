@@ -12,8 +12,8 @@ import useSearchModal from '@/app/hooks/useSearchModal';
 import Modal from "./Modal";
 import Calender from "../inputs/Calendar";
 import Counter from "../inputs/Counter";
-import StateSelect, { USStateValue } from "../inputs/StateSelect";
-import CitySelect, { StateCityValue } from "../inputs/CitySelect";
+import USStateSelect, { USStateValue } from "../inputs/StateSelect";
+import USCitySelect, { USCityValue } from "../inputs/CitySelect";
 import Heading from '../Heading';
 
 const SearchModal = () => { 
@@ -21,7 +21,7 @@ const SearchModal = () => {
   const searchModal = useSearchModal();
   const params = useSearchParams();
   const [usState, setUSState] = useState<USStateValue>();
-  const [stateCity, setStateCity] = useState<StateCityValue>();
+  const [usCity, setUSCity] = useState<USCityValue>();
   const [guestCount, setGuestCount] = useState(1);
   const [roomCount, setRoomCount] = useState(1);
   const [bathroomCount, setBathroomCount] = useState(1);
@@ -40,7 +40,7 @@ const SearchModal = () => {
     const updatedQuery: any = {
       ...currentQuery,
       region_name: usState?.stateName,
-      place_name: stateCity?.cityName,
+      place_name: usCity?.cityName,
       guestCount,
       roomCount,
       bathroomCount
@@ -53,7 +53,6 @@ const SearchModal = () => {
     if (dateRange.endDate) {
       updatedQuery.endDate = formatISO(dateRange.endDate);
     }
-
     const url = qs.stringifyUrl({
       url: '/',
       query: updatedQuery,
@@ -64,7 +63,7 @@ const SearchModal = () => {
   [
     searchModal,
     usState,
-    stateCity,
+    usCity,
     router,
     params, 
     guestCount,
@@ -81,17 +80,15 @@ const SearchModal = () => {
           title="Which US state are you visiting?"
           subtitle="Find the perfect location!"
         />
-        <StateSelect 
+        <USStateSelect 
           value={usState} 
-          onChange={(value) => 
-            setUSState(value as USStateValue)}
+          onChange={(value) => setUSState(value as USStateValue)}
         />
         {!!usState !== false && (
-          <CitySelect
-            usState={usState}
-            value={stateCity} 
-            onChange={(value) => 
-              setStateCity(value as StateCityValue)}
+          <USCitySelect
+            stateCode={usState.stateCode}
+            value={usCity} 
+            onChange={(value) => setUSCity(value as USCityValue)}
           />
         )}
       </div>

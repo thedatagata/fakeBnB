@@ -6,13 +6,13 @@ import { BiSearch } from 'react-icons/bi';
 import { differenceInDays } from 'date-fns';
 
 import useSearchModal from '@/app/hooks/useSearchModal';
-import useStateCitiesLookup from '@/app/hooks/useStateCitiesLookup';
 
 const Search = () => {
   const searchModal = useSearchModal();
   const params = useSearchParams();
 
   const  USStateValue = params?.get('region_name');
+  const  StateCityValue = params?.get('place_name');
   const  startDate = params?.get('startDate');
   const  endDate = params?.get('endDate');
   const  guestCount = params?.get('guestCount');
