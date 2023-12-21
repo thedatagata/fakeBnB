@@ -5,14 +5,20 @@ import {useState} from 'react'
 import getCenter from 'geolib/es/getCenter'
 import { FaMapMarkerAlt } from "react-icons/fa";
 
+interface ListingMapProps {
+  listings: any
+};
 
-const ListingMap = ({ listings }) => {
+
+
+const ListingMap: React.FC<ListingMapProps> = ({ listings }) => {
   const listingCoords = listings.map((listing: any) => ({
     latitude: listing.latitude,
     longitude: listing.longitude
   }));
+  console.log(listingCoords);
   const mapCenter = getCenter(listingCoords); 
-  const [selectedListing, setSelectedListing] = useState({} as any)
+  console.log(mapCenter);
   const [viewState, setViewState] = useState({
     latitude: mapCenter.latitude,
     longitude: mapCenter.longitude,
@@ -23,22 +29,21 @@ const ListingMap = ({ listings }) => {
   return (
     <ReactMapGL
      mapboxAccessToken={process.env.mapbox_key}
+     style={{width: "100%", height: "100%"}}
      mapStyle={process.env.style_url}
      initialViewState={{
       ...viewState
      }}
      onMove={evt => setViewState(evt.viewState)}
     >
-     {listings.map((listing)=>(
-      <div>
+     {listings.map((listing: any)=>(
+      <div key={listing.id}>
         <Marker
          key={listing.id}
          longitude={listing.longitude} 
-         latitude={listing.latitude} 
-         offsetLeft={-20} 
-         offsetTop={-10}
+         latitude={listing.latitude}
         >
-          <p className="cursor-pointer text-2xl animate-bounce" onClick={()=>setSelectedListing(listing)}>
+          <p className="cursor-pointer text-2xl animate-bounce">
             <FaMapMarkerAlt />
           </p>
         </Marker>

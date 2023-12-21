@@ -31,32 +31,27 @@ const Home = async ({ searchParams }: HomeProps) => {
   return (
     <ClientOnly>
         <Container>
-          <section>
-            <div 
-              className="
-                pt-24
-                grid 
-                grid-cols-1 
-                sm:grid-cols-2 
-                md:grid-cols-3 
-                lg:grid-cols-4
-                xl:grid-cols-5
-                2xl:grid-cols-6
-                gap-8
-              "
-            >
-              {listings.map((listing: any) => (
-                <ListingCard
-                  currentUser={currentUser}
-                  key={listing.id}
-                  data={listing}
-                />
-              ))}
-            </div>
-          </section>
-          <section className="hidden xl:inline-flex xl:min-w-[600px] h-full">
-            <ListingMap listings={listings} />
-          </section>
+          <main className="flex">
+            <section className="flex-col flex-grow">
+              <div 
+                className="
+                  pt-24
+                  gap-8
+                "
+              >
+                {listings.map((listing: any) => (
+                  <ListingCard
+                    currentUser={currentUser}
+                    key={listing.id}
+                    data={listing}
+                  />
+                ))}
+              </div>
+            </section>
+            <section className="hidden xl:inline-flex xl:min-w-[600px]">
+              <ListingMap listings={listings}/>
+            </section>
+          </main>
         </Container>
     </ClientOnly>
   )
