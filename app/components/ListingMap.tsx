@@ -17,7 +17,6 @@ interface ListingMapProps {
 };
 
 const ListingMap: React.FC<ListingMapProps> = ({ listings }) => {
-  console.log(listings);
   const [viewState, setViewState] = useState({
     latitude: 0,
     longitude: 0,
@@ -37,12 +36,13 @@ const ListingMap: React.FC<ListingMapProps> = ({ listings }) => {
     }));
 
     const mapCenter = getCenter(coordinates);
+    console.log(mapCenter);
     const boundsRect = mapContainerRef.current.getBoundingClientRect();
 
     let bounds = [
       [Infinity, Infinity],
       [-Infinity, -Infinity]
-    ];
+    ] as [[number, number], [number, number]]; 
 
     coordinates.forEach(coord => {
       bounds = [
@@ -51,11 +51,19 @@ const ListingMap: React.FC<ListingMapProps> = ({ listings }) => {
       ];
     });
 
+    console.log(bounds);
+
     const viewport = new WebMercatorViewport({ width: boundsRect.width, height: boundsRect.height })
-      .fitBounds([bounds[0], bounds[1]], { padding: 20 });
+      .fitBounds(
+        bounds=[bounds[0], bounds[1]],
+        { 
+          maxZoom: 15,
+          padding: 20
+        }
+      );
 
     setViewState({
-      latitude: mapCenter.latitude, // Corrected to use mapCenter
+      latitude: mapCenter.latitude, 
       longitude: mapCenter.longitude,
       zoom: viewport.zoom
     });
