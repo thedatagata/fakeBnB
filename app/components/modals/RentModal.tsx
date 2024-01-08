@@ -7,7 +7,6 @@ import {
   SubmitHandler, 
   useForm
 } from 'react-hook-form';
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation';
 import { useMemo, useState, useCallback} from "react";
 
@@ -30,6 +29,32 @@ enum STEPS {
   DESCRIPTION = 4,
   PRICE = 5,
 }
+
+type AddressProperties = {
+  address?: string;
+  full_address?: string;
+  context: {
+    country?: { country_code: string };
+    region?: { name: string };
+    postcode?: { name: string };
+    district?: { name: string };
+    place?: { name: string };
+    neighborhood?: { name: string };
+  };
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
+};
+
+type Feature = {
+  properties?: AddressProperties;
+};
+
+
+type AddressData = {
+  features?: Feature[];
+};
 
 const RentModal = () => {
   const router = useRouter();
@@ -84,24 +109,23 @@ const RentModal = () => {
     })
   }
 
-  const setAddressData = (data: object) => {
-    const properties = data.features[0].properties;
-    console.log(properties);
+  const setAddressData = (data: AddressData) => {
+    const properties = data.features?.[0]?.properties;
+    if (!properties) return;
     const keyValuePairs = {
       'address': properties.address,
       'full_address': properties.full_address,
-      'country_code': properties.context.country.country_code,
-      'region_name': properties.context.region.name,
-      'postcode': properties.context.postcode.name,
+      'country_code': properties.context?.country?.country_code ?? '',
+      'region_name': properties.context?.region?.name ?? '',
+      'postcode': properties.context?.postcode?.name ?? '',
       'district_name': properties.context?.district?.name || '',
       'place_name': properties.context?.place?.name || '',
       'neighborhood': properties.context?.neighborhood?.name || '',
-      'latitude': properties.coordinates.latitude,
-      'longitude': properties.coordinates.longitude
+      'latitude': properties?.coordinates?.latitude ?? 0,
+      'longitude': properties?.coordinates?.longitude ?? 0
     };
     Object.entries(keyValuePairs).forEach(([id, value]) => {
       if (value !== null) {
-        console.log(id, value);
         setCustomValue(id, value);
       }
     });
@@ -302,8 +326,6 @@ const RentModal = () => {
       title="FakeBnB your home!"
       actionLabel={actionLabel}
       onSubmit={handleSubmit(onSubmit)}
-      secondaryActionLabel={secondaryActionLabel}
-      secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       onClose={rentModal.onClose}
       body={bodyContent}
     />

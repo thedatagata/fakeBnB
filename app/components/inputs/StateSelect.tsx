@@ -10,7 +10,7 @@ export type USStateValue = {
 
 interface StateSelectProps {
     value?: USStateValue; 
-    onChange: (value: USStateValue) => void;
+    onChange: (value: any) => void;
 }
 
 const USStateSelect: React.FC<StateSelectProps> = ({ value, onChange }) => {

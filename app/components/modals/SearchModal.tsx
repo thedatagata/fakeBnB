@@ -1,7 +1,6 @@
 'use client';
 
 import qs from 'query-string';
-import dynamic from 'next/dynamic'
 import { useCallback, useMemo, useState } from "react";
 import { Range } from 'react-date-range';
 import { formatISO, set } from 'date-fns';
@@ -84,7 +83,7 @@ const SearchModal = () => {
           value={usState} 
           onChange={(value) => setUSState(value as USStateValue)}
         />
-        {!!usState !== false && (
+        {!!usState !== false && usState && (
           <USCitySelect
             stateCode={usState.stateCode}
             value={usCity} 

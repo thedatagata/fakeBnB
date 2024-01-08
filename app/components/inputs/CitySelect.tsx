@@ -4,13 +4,12 @@ import useStateCitiesLookup from '@/app/hooks/useStateCitiesLookup';
 import Select from 'react-select';
 
 export type USCityValue = {
-  cityName?: string;
+  cityName: string;
 }
-
 interface CitySelectProps {
     value?: USCityValue;
     stateCode: string;
-    onChange: (value: USCityValue) => void;
+    onChange: (city: any) => void;
 }
 
 const USCitySelect: React.FC<CitySelectProps> = ({ value, stateCode, onChange }) => {
