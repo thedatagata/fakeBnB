@@ -59,11 +59,13 @@ const ListingMap: React.FC<ListingMapProps> = ({ listings }) => {
         }
       );
 
-    setViewState({
-      latitude: mapCenter.latitude, 
-      longitude: mapCenter.longitude,
-      zoom: viewport.zoom
-    });
+    if(mapCenter){
+      setViewState({
+        latitude: mapCenter.latitude, 
+        longitude: mapCenter.longitude,
+        zoom: viewport.zoom
+      });
+    }
   }, [listings]);
 
   return (
