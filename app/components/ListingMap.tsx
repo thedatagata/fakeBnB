@@ -36,7 +36,6 @@ const ListingMap: React.FC<ListingMapProps> = ({ listings }) => {
     }));
 
     const mapCenter = getCenter(coordinates);
-    console.log(mapCenter);
     const boundsRect = mapContainerRef.current.getBoundingClientRect();
 
     let bounds = [
@@ -50,8 +49,6 @@ const ListingMap: React.FC<ListingMapProps> = ({ listings }) => {
         [Math.max(bounds[1][0], coord.longitude), Math.max(bounds[1][1], coord.latitude)]
       ];
     });
-
-    console.log(bounds);
 
     const viewport = new WebMercatorViewport({ width: boundsRect.width, height: boundsRect.height })
       .fitBounds(
