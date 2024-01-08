@@ -1,13 +1,14 @@
 import {SearchBox} from "@mapbox/search-js-react"; 
 
 interface SearchBoxProps {
-    accessToken?: string;
-    value?: object;
+    accessToken: string;
+    value?: string;
     placeholder?: string;
-    onRetrieve: (value: string) => void;
+    onRetrieve: (result: object) => void;
   }
 
 const AddressSearch: React.FC<SearchBoxProps> = ({ accessToken, value, placeholder, onRetrieve }) => {
+    if(!accessToken) return null;
     return (
         <form>
             <SearchBox
