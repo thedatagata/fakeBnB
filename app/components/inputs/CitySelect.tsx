@@ -4,7 +4,7 @@ import useStateCitiesLookup from '@/app/hooks/useStateCitiesLookup';
 import Select from 'react-select';
 
 export type USCityValue = {
-  cityName: string;
+  cityName?: string;
 }
 
 interface CitySelectProps {
