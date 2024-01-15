@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
 
 import { SafeUser } from "@/app/types";

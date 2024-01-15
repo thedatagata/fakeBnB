@@ -8,20 +8,17 @@ import { useRouter } from "next/navigation";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useRentModal from "@/app/hooks/useRentModal";
-import { SafeUser } from "@/app/types";
+import { useUserContext } from "@/app/contexts/UserContext";
+
 
 import MenuItem from "./MenuItem";
 import Avatar from "../Avatar";
 
-interface UserMenuProps {
-  currentUser?: SafeUser | null
-}
 
-const UserMenu: React.FC<UserMenuProps> = ({
-  currentUser
-}) => {
+
+const UserMenu: React.FC = () => {
+  const { currentUser } = useUserContext();
   const router = useRouter();
-
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const rentModal = useRentModal();

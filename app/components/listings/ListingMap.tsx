@@ -49,7 +49,6 @@ const ListingMap: React.FC<ListingMapProps> = ({ listings }) => {
         [Math.max(bounds[1][0], coord.longitude), Math.max(bounds[1][1], coord.latitude)]
       ];
     });
-
     const viewport = new WebMercatorViewport({ width: boundsRect.width, height: boundsRect.height })
       .fitBounds(
         bounds=[bounds[0], bounds[1]],

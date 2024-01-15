@@ -144,10 +144,10 @@ const RentModal = () => {
       return onNext();
     }
     setIsLoading(true);
-    console.log(data);
     axios.post('/api/listings', data)
     .then(() => {
       toast.success('Listing created!');
+      //probably a good place to push data to the data layer
       router.refresh();
       reset();
       setStep(STEPS.CATEGORY)
@@ -196,8 +196,7 @@ const RentModal = () => {
         {categories.map((item) => (
           <div key={item.label} className="col-span-1">
             <CategoryInput
-              onClick={(category) => 
-                setCustomValue('category', category)}
+              onClick={(category) => setCustomValue('category', category)}
               selected={category === item.label}
               label={item.label}
               icon={item.icon}
@@ -320,11 +319,14 @@ const RentModal = () => {
   }
 
   return (
+    //Title for each step is FakeBnB your home! Step Name comes from bodyContent
     <Modal
       disabled={isLoading}
       isOpen={rentModal.isOpen}
       title="FakeBnB your home!"
       actionLabel={actionLabel}
+      secondaryActionLabel={secondaryActionLabel}
+      secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       onSubmit={handleSubmit(onSubmit)}
       onClose={rentModal.onClose}
       body={bodyContent}

@@ -1,7 +1,14 @@
+- Think about addEventProps
+  - stateful user props 
+    - logged_in 
+    - total_listings
+    - total_reservations 
+    - total_reservation_value
 
-- abandon booking 
-- chat with host
-- sharing itenerary 
-- profile location 
-- favorite listings 
-- ability to re-order listings 
+- Asset Loaded Event Props
+  - Is a root level context necessary? 
+    - Modals 
+    - Listing
+    - Account
+
+- Clicks

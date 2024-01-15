@@ -2,14 +2,12 @@ import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";
 import EmptyState from "@/app/components/EmptyState";
 
-
-
 import getListings, { 
   IListingsParams
 } from "@/app/actions/getListings";
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import ClientOnly from "./components/ClientOnly";
-import ListingMap from "./components/ListingMap";
+import ClientOnly from "@/app/components/ClientOnly";
+import ListingMap from "@/app/components/listings/ListingMap";
 
 
 interface HomeProps {

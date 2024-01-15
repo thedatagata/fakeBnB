@@ -4,6 +4,7 @@ import qs from 'query-string';
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { IconType } from "react-icons";
+import { useUserContext } from '@/app/contexts/UserContext';
 
 interface CategoryBoxProps {
   icon: IconType,
@@ -18,6 +19,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
 }) => {
   const router = useRouter();
   const params = useSearchParams();
+  const { currentUser } = useUserContext();
 
   const handleClick = useCallback(() => {
     let currentQuery = {};
@@ -34,7 +36,8 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
     if (params?.get('category') === label) {
       delete updatedQuery.category;
     }
-
+    //this is where category filter is applied
+    console.log(`${currentUser?.name} is searching for properties in the ${updatedQuery.category} category`);
     const url = qs.stringifyUrl({
       url: '/',
       query: updatedQuery

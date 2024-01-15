@@ -57,6 +57,8 @@ const SearchModal = () => {
       query: updatedQuery,
     }, { skipNull: true });
     searchModal.onClose();
+    // looks like filters are applied here
+    console.log('search params: -> ', updatedQuery)
     router.push(url);
   }, 
   [
