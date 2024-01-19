@@ -68,14 +68,16 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <div 
-      onClick={() => router.push(`/listings/${data.id}`)} 
+      onClick={() => router.push(`/listings/${data.id}`)}
+      id={`listing-${data.id}`}
       className="flex py-7 px-2 border-b 
         cursor-pointer 
         hover:opacity-80 
         hover:shadow-lg 
         pr-4 
         transition duration-200 ease-out 
-        first:border-t"
+        first:border-t
+        listing-card"
     >
       <div className="relative aspect-square w-40 h-24 md:h-52 md:w-80 overflow-hidden rounded-xl flex-shrink-0">
           <Image

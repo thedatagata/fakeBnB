@@ -11,7 +11,6 @@ type UserContextProviderProps = {
     children: React.ReactNode;
 };
 
-// Updated createContext to include a default value that matches the type
 export const UserContext = createContext<UserContextType>({
     currentUser: null,
 });
@@ -20,7 +19,6 @@ export default function UserContextProvider({
     currentUser = null, 
     children, 
 }: UserContextProviderProps) {
-    // Directly provide the currentUser prop to the context
     return (
       <UserContext.Provider value={{ currentUser }}>
         {children}

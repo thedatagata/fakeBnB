@@ -4,7 +4,7 @@ import LoginModal from '@/app/components/modals/LoginModal';
 import RegisterModal from '@/app/components/modals/RegisterModal';
 import SearchModal from '@/app/components/modals/SearchModal';
 import RentModal from '@/app/components/modals/RentModal';
-import TagManager from '@/app/components/TagManager';
+
 
 import ToasterProvider from '@/app/providers/ToasterProvider';
 
@@ -12,6 +12,8 @@ import './globals.css'
 import ClientOnly from './components/ClientOnly';
 import UserContextProvider from './contexts/UserContext';
 import getCurrentUser from './actions/getCurrentUser';
+import TagManager, { URLTracker } from './components/tags/TagManager';
+
 
 export const metadata = {
   title: 'FakeBnB',
@@ -39,6 +41,7 @@ export default async function RootLayout({
       <body className={font.className}>
         <ClientOnly>
           <UserContextProvider currentUser={currentUser}>
+            <URLTracker />
             <ToasterProvider />
             <LoginModal />
             <SearchModal />

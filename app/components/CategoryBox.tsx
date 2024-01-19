@@ -37,7 +37,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
       delete updatedQuery.category;
     }
     //this is where category filter is applied
-    console.log(`${currentUser?.name} is searching for properties in the ${updatedQuery.category} category`);
+    console.log(currentUser);
     const url = qs.stringifyUrl({
       url: '/',
       query: updatedQuery
@@ -49,7 +49,9 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
   return ( 
     <div
       onClick={handleClick}
+      id={`category-${label}`.toLowerCase()}
       className={`
+        category-box
         flex 
         flex-col 
         items-center 
