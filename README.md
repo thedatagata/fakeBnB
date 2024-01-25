@@ -21,6 +21,7 @@
 
 - Install the node.js version used for this project
 1. Run in iTerm: `nvm install 18.9.0`
+2. Run in iTerm: `nvm use 18`
 
 - [Next.js Installation Docs (Follow Manual Install)](https://nextjs.org/docs/getting-started/installation)
 
