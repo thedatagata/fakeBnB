@@ -13,10 +13,18 @@
 7. Download VS Code: [VS Code Download](https://code.visualstudio.com/download) 
 8. [VS Code Extensions](https://medium.com/geekculture/5-vscode-extensions-tricks-to-speed-up-react-nextjs-development-workflow-1b3b5773840d)
 
-- [Next.js Installation Docs](https://nextjs.org/docs/getting-started/installation)
+- [Setting up NVM on Mac](https://medium.com/devops-techable/how-to-install-nvm-node-version-manager-on-macos-with-homebrew-1bc10626181)
+1. Run in iTerm: `brew install nvm`
+2. Run in iTerm: `mkdir ~/.nvm`
+3. Run in iTerm: `echo "export NVM_DIR=~/.nvm\nsource \$(brew --prefix nvm)/nvm.sh" >> .zshrc`
+4. Run in iTerm: `source ~/.zshrc`
 
-1. `nvm install 18.9.0`
-2. `npm install next@latest react@latest react-dom@latest`
+- Install the node.js version used for this project
+1. Run in iTerm: `nvm install 18.9.0`
+
+- [Next.js Installation Docs (Follow Manual Install)](https://nextjs.org/docs/getting-started/installation)
+
+1. Run in iTerm: `npm install next@latest react@latest react-dom@latest`
 
 - [Github SignUp](https://github.com/)
 
